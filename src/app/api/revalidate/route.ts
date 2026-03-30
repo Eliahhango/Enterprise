@@ -58,7 +58,7 @@ export async function POST(request: Request) {
   const tags = getTagsForRevalidation({ type, slug });
 
   paths.forEach((path) => revalidatePath(path));
-  tags.forEach((tag) => revalidateTag(tag));
+  tags.forEach((tag) => revalidateTag(tag, "max"));
 
   return NextResponse.json({
     ok: true,
