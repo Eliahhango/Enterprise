@@ -4,6 +4,8 @@ import { caseStudies } from "@/lib/case-studies";
 import { services } from "@/lib/services";
 import { getAbsoluteUrl } from "@/lib/seo/site";
 
+type SitemapEntry = MetadataRoute.Sitemap[number];
+
 const staticRoutes = [
   "/",
   "/about",
@@ -17,21 +19,21 @@ const staticRoutes = [
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
-  const staticEntries = staticRoutes.map((path) => ({
+  const staticEntries: SitemapEntry[] = staticRoutes.map((path) => ({
     url: getAbsoluteUrl(path),
     lastModified: now,
-    changeFrequency: path === "/" ? "weekly" : "monthly",
+    changeFrequency: path === "/" ? ("weekly" as const) : ("monthly" as const),
     priority: path === "/" ? 1 : 0.8,
   }));
 
-  const serviceEntries = services.map((service) => ({
+  const serviceEntries: SitemapEntry[] = services.map((service) => ({
     url: getAbsoluteUrl(`/services/${service.slug}`),
     lastModified: now,
     changeFrequency: "monthly" as const,
     priority: 0.9,
   }));
 
-  const caseStudyEntries = caseStudies.map((caseStudy) => ({
+  const caseStudyEntries: SitemapEntry[] = caseStudies.map((caseStudy) => ({
     url: getAbsoluteUrl(`/case-studies/${caseStudy.slug}`),
     lastModified: now,
     changeFrequency: "monthly" as const,
