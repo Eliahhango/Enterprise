@@ -53,7 +53,7 @@ jobs:
 
   analyze:
     needs: detect-languages
-    if: needs.detect-languages.outputs.enabled == 'true' && github.event.repository.private == false
+    if: needs.detect-languages.outputs.enabled == 'true'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
